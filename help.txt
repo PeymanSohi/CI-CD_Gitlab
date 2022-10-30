@@ -1,0 +1,24 @@
+before_scrips: "script"
+after_script: "script"
+retry: 1,2
+only: "branch name"
+needs: "depended job"
+
+workflow:
+    rules:
+        - ... example ---> (- if: $CI_COMMIT_BRANCH != "main") ///in this case CI runs just on
+                                when: never                        main branch not other branches
+                            - when: always    
+        - ...
+        - ...               (-if $CI_PIPELINE_SOURCE != "merge_request_event") /// just runs for merge requests
+
+variables:
+    key:vaule
+tags:
+    - "runner's tag" ---> to run pipeline on specific runner
+artifacts:
+    when: always ---> when test faild
+    paths:
+      - rspec.xml
+    reports:
+      junit: rspec.xml
